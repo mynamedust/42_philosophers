@@ -30,24 +30,24 @@ int	params_init(t_params *p, char **args, int argc)
 	p->time_die = ft_atoi(args[2]);
 	p->time_eat = ft_atoi(args[3]);
 	p->time_sleep = ft_atoi(args[4]);
-	p->eat_count = 0;
+	p->eat_max = 0;
 	if (argc == 6)
-		p->eat_count = ft_atoi(args[5]);
+		p->eat_max = ft_atoi(args[5]);
 	p->forks = malloc(sizeof(pthread_mutex_t) * p->num_philo);
 	if (!p->forks)
 		return (1);
 	p->die = 0;
-	p->print = 0;
+    p->eat_count = 0;
 	mutex_init(p);
-	pthread_mutex_init(&(p->print_mtx), NULL);
 	pthread_mutex_init(&(p->die_mtx), NULL);
-	return (0);
+    pthread_mutex_init(&(p->eat_mtx), NULL);
+    return (0);
 }
 
 t_philo	*philo_init(t_params *p, int i)
 {
 	t_philo *philo;
-	
+
 	philo = malloc(sizeof(t_philo) * p->num_philo);
 	if (!philo)
 		return (NULL);

@@ -60,7 +60,7 @@ void	*hThread(void *args)
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
-	while (philo->ate < philo->p->eat_count || philo->p->eat_count == 0)
+	while (1)
 	{
 		if (die_return(philo) == 1)
 			return (0);
@@ -85,11 +85,18 @@ void	*hThread(void *args)
 		philo->last_eat = get_time();
 		pthread_mutex_unlock(&philo->last_eat_mtx);
 		ft_usleep(philo->p->time_eat);
+        pthread_mutex_unlock(fork_pick(philo, 2));
+        pthread_mutex_unlock(fork_pick(philo, 1));
 		pthread_mutex_lock(&philo->ate_mtx);
 		philo->ate++;
+        pthread_mutex_lock(&philo->p->eat_mtx);
+        if (philo->p->eat_max != 0 && philo->ate == philo->p->eat_max)
+        {
+            philo->p->eat_count += 1;
+            printf("%d\n", philo->p->eat_max);
+        }
+        pthread_mutex_unlock(&philo->p->eat_mtx);
 		pthread_mutex_unlock(&philo->ate_mtx);
-		pthread_mutex_unlock(fork_pick(philo, 2));
-		pthread_mutex_unlock(fork_pick(philo, 1));
 		if (die_return(philo) == 1)
 			return (0);
 		printf("%lums %d is sleeping\n", get_time(), philo->id);
@@ -101,8 +108,6 @@ void	*hThread(void *args)
 	return (0);
 }
 
-
-
 void	*die_check(void *args)
 {
 	t_params	*p;
@@ -113,22 +118,30 @@ void	*die_check(void *args)
 	while (i < p->num_philo)
 	{
 		pthread_mutex_lock(&p->philo[i].last_eat_mtx);
-			if (get_time() - p->philo[i].last_eat > (unsigned long)p->time_die)
-			{
-				pthread_mutex_lock(&p->print_mtx);
-				pthread_mutex_lock(&p->die_mtx);
-				printf("%lums %d died; LAST EAT - %d\n ", get_time(), i, p->philo[i].last_eat);
-				p->die = 1;
-				p->print = 1;
-				pthread_mutex_unlock(&p->die_mtx);
-				pthread_mutex_unlock(&p->print_mtx);
-				pthread_mutex_unlock(&p->philo[i].last_eat_mtx);
-				return (0);
-			}
+        if (get_time() - p->philo[i].last_eat > (unsigned long)p->time_die)
+        {
+            pthread_mutex_lock(&p->die_mtx);
+            printf("%lums %d died; LAST EAT - %d\n ", get_time(), i, p->philo[i].last_eat);
+            p->die = 1;
+            pthread_mutex_unlock(&p->die_mtx);
+            pthread_mutex_unlock(&p->philo[i].last_eat_mtx);
+            return (0);
+        }
 		pthread_mutex_unlock(&p->philo[i].last_eat_mtx);
-		i++;
-		if (i == p->num_philo)
-			i = 0;
+        pthread_mutex_lock(&p->eat_mtx);
+        pthread_mutex_lock(&p->die_mtx);
+        if (p->eat_count == p->num_philo)
+        {
+            p->die = 1;
+            pthread_mutex_unlock(&p->die_mtx);
+            pthread_mutex_unlock(&p->eat_mtx);
+            return (0);
+        }
+        pthread_mutex_unlock(&p->die_mtx);
+        pthread_mutex_unlock(&p->eat_mtx);
+        i++;
+        if (i == p->num_philo)
+            i = 0;
 	}
 	return (0);
 }
@@ -136,7 +149,6 @@ void	*die_check(void *args)
 int	main(int argc, char **argv)
 {
 	t_params	p;
-	int			status;
 	int			i;
 	int 		status_addr;
 
@@ -147,7 +159,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < p.num_philo)
 	{
-		status = pthread_create(&(p.philo[i].thread), NULL, hThread, &p.philo[i]);
+		pthread_create(&(p.philo[i].thread), NULL, hThread, &p.philo[i]);
 		i++;
     }
 	get_time();
@@ -159,6 +171,5 @@ int	main(int argc, char **argv)
 		pthread_join(p.philo[i].thread, (void**) &status_addr);
 		i++;
     }
-	printf("here\n");
 	return (0);
 }

@@ -16,13 +16,14 @@ typedef struct s_params
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
-	int				eat_count;
+	int				eat_max;
+    int             eat_count;
 	int				die;
-	int				print;
 	struct s_philo	*philo;
 	pthread_t		die_thr;
 	pthread_mutex_t	print_mtx;
 	pthread_mutex_t	die_mtx;
+    pthread_mutex_t eat_mtx;
 	pthread_mutex_t	*forks;
 }	t_params;
 
