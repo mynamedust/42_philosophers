@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:24:55 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/04 20:11:27 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:31:36 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@ unsigned long	get_time(t_params	*p)
 int	count_check(t_params *p)
 {
 	pthread_mutex_lock(&p->eat_mtx);
+	pthread_mutex_lock(&p->die_mtx);
 	if (p->eat_count == p->num_philo)
 	{
-		pthread_mutex_lock(&p->die_mtx);
 		p->die = 1;
 		pthread_mutex_unlock(&p->die_mtx);
 		pthread_mutex_unlock(&p->eat_mtx);
 		return (0);
 	}
+	pthread_mutex_unlock(&p->die_mtx);
 	pthread_mutex_unlock(&p->eat_mtx);
 	return (1);
 }
