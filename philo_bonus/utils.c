@@ -6,24 +6,11 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:24:55 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/07 20:33:40 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:51:31 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-pthread_mutex_t	*fork_pick(t_philo *philo, int order)
-{
-	if (order == 1)
-	{
-		if (philo->id % 2 == 0)
-			return (philo->right);
-		return (philo->left);
-	}
-	if (philo->id % 2 == 0)
-		return (philo->left);
-	return (philo->right);
-}
 
 unsigned long	get_time(t_params	*p)
 {
@@ -31,27 +18,11 @@ unsigned long	get_time(t_params	*p)
 	static unsigned long	start;
 
 	gettimeofday(&tv, NULL);
-	pthread_mutex_lock(&p->time_mtx);
+	sem_wait(p->time_sem);
 	if (!start)
 		start = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	pthread_mutex_unlock(&p->time_mtx);
+	sem_post(p->time_sem);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000 - start);
-}
-
-int	count_check(t_params *p)
-{
-	pthread_mutex_lock(&p->eat_mtx);
-	pthread_mutex_lock(&p->die_mtx);
-	if (p->eat_count == p->num_philo)
-	{
-		p->die = 1;
-		pthread_mutex_unlock(&p->die_mtx);
-		pthread_mutex_unlock(&p->eat_mtx);
-		return (0);
-	}
-	pthread_mutex_unlock(&p->die_mtx);
-	pthread_mutex_unlock(&p->eat_mtx);
-	return (1);
 }
 
 void	ft_usleep(t_params *p, unsigned long ms)
@@ -66,12 +37,12 @@ void	ft_usleep(t_params *p, unsigned long ms)
 
 int	die_return(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->p->die_mtx);
+	sem_wait(philo->p->die_sem);
 	if (philo->p->die == 1)
 	{
-		pthread_mutex_unlock(&philo->p->die_mtx);
+		sem_post(philo->p->die_sem);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->p->die_mtx);
+	sem_post(philo->p->die_sem);
 	return (0);
 }

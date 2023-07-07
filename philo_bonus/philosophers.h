@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:27:27 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/05 20:06:39 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:52:04 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <semaphore.h>
 
 //Types
 typedef struct s_params
@@ -29,10 +30,11 @@ typedef struct s_params
 	int				time_eat;
 	int				time_sleep;
 	int				eat_max;
-	int				eat_count;
 	int				die;
+	sem_t			*die_sem;
+	sem_t			*forks;
+	sem_t			*time_sem;
 	struct s_philo	*philo;
-	pthread_t		die_thr;
 }	t_params;
 
 typedef struct s_philo
@@ -40,7 +42,8 @@ typedef struct s_philo
 	int				id;
 	int				ate;
 	int				last_eat;
-	pthread_t		thread;
+	sem_t			*last_eat_sem;
+	sem_t			*ate_sem;
 	t_params		*p;
 }	t_philo;
 

@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:27:27 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/05 20:00:42 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:34:43 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_params
 	int				die;
 	struct s_philo	*philo;
 	pthread_t		die_thr;
-	pthread_mutex_t	print_mtx;
 	pthread_mutex_t	die_mtx;
 	pthread_mutex_t	eat_mtx;
 	pthread_mutex_t	time_mtx;

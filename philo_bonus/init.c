@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/05 20:11:29 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:17:25 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,24 @@ int	params_init(t_params *p, char **args, int argc)
 	if (argc == 6)
 		p->eat_max = ft_atoi(args[5]);
 	p->die = 0;
-	p->eat_count = 0;
+	p->forks = sem_open("forks1", O_CREAT, p->num_philo, p->num_philo);
+	if (p->forks == SEM_FAILED)
+	{
+		printf("Error: semaphore initialization failed\n");
+		return (1);
+	}
+	p->die_sem = sem_open("die_sem1", O_CREAT, 1, 1);
+	if (p->die_sem == SEM_FAILED)
+	{
+		printf("Error: semaphore initialization failed\n");
+		return (1);
+	}
+	p->time_sem = sem_open("time_sem3", O_CREAT, 1, 1);
+	if (p->time_sem == SEM_FAILED)
+	{
+		printf("Error: semaphore initialization failed\n");
+		return (1);
+	}
 	return (0);
 }
 
@@ -65,6 +82,12 @@ t_philo	*philo_init(t_params *p, int id)
 	philo->ate = 0;
 	philo->last_eat = 0;
 	philo->p = p;
+	philo->last_eat_sem = sem_open("last_eat", O_CREAT, 1, 1);
+	if (philo->last_eat_sem == SEM_FAILED)
+		return (NULL);
+	philo->ate_sem = sem_open("ate_sem", O_CREAT, 1, 1);
+	if (philo->ate_sem == SEM_FAILED)
+		return (NULL);
 	return (philo);
 }
 
