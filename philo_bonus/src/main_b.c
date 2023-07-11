@@ -1,7 +1,4 @@
 #include "philosophers.h"
-#include <sys/types.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 void	clean_exit(t_params *p)
 {
@@ -103,7 +100,7 @@ void	*die_check(void *args)
 		if (get_time(p) - p->philo->last_eat > (unsigned long)p->time_die)
 		{
 			sem_wait(p->print_sem);
-			printf("%lu %d died, lasteat - %d\n", get_time(p), p->philo->id + 1, p->philo->last_eat);
+			printf("%lu %d died\n", get_time(p), p->philo->id + 1);
 			p->die = 1;
 			exit (0);
 		}
@@ -116,13 +113,11 @@ void	*die_check(void *args)
 void	p_process(t_params *p, t_philo *philo)
 {
 	pthread_t	checker;
-	pthread_t	philosoph;
 	int			status_addr;
 
-	pthread_create(&checker, NULL, p_thread, philo);
-	pthread_create(&philosoph, NULL, die_check, p);
+	pthread_create(&checker, NULL, die_check, p);
+	p_thread(philo);
 	pthread_join(checker, (void **)&status_addr);
-	pthread_join(philosoph, (void **)&status_addr);
 }
 
 int main(int argc, char **argv)
@@ -132,6 +127,7 @@ int main(int argc, char **argv)
 	int			status;
 
 	status = 256;
+	get_time(&p);
 	if (argc < 5 || params_valid(argv + 1, argc - 1))
 		return (1);
 	if (params_init(&p, argv, argc) == 1)
@@ -148,15 +144,14 @@ int main(int argc, char **argv)
 	}
 	if (i < p.num_philo)
 	{
-		printf("%d - ID\n", i);
+		get_time(&p);
 		p.philo = philo_init(&p, i);
 		p_process(&p, p.philo);
 	}
 	if (i >= p.num_philo)
 	{
-		while (status == 256 && --i >= 0)
+		while (status == 256 && --i > 0)
 			waitpid(-1, &status, 0);
-		printf("status - %d\n", status);
 		while (++i < p.num_philo)
 			kill(p.pids[i], SIGKILL);
 	}

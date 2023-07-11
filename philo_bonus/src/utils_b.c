@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_b.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:24:55 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/07 20:51:31 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/11 20:04:21 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-unsigned long	get_time(t_params	*p)
+unsigned long	get_time(t_params *p)
 {
 	struct timeval			tv;
 	static unsigned long	start;

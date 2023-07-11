@@ -6,14 +6,14 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:27:27 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/10 20:19:10 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:48:49 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-//includes
+//Includes
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -62,7 +62,7 @@ t_philo			*philo_init(t_params *p, int i);
 
 //Utils
 pthread_mutex_t	*fork_pick(t_philo *philo, int order);
-unsigned long	get_time(t_params	*p);
+unsigned long	get_time(t_params *p);
 int				count_check(t_params *p);
 void			ft_usleep(t_params *p, unsigned long ms);
 int				die_return(t_philo *philo);

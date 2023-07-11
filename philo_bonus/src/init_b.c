@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/10 20:17:08 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/11 20:06:31 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,30 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
+void	sem_init(t_params *p)
+{
+	sem_unlink("forks");
+	sem_unlink("die_sem");
+	sem_unlink("time_sem");
+	sem_unlink("last_eat");
+	sem_unlink("ate_sem");
+	sem_unlink("print_sem");
+	p->forks = sem_open("forks", O_CREAT, 0666, p->num_philo);
+	p->die_sem = sem_open("die_sem", O_CREAT, 0666, 1);
+	p->time_sem = sem_open("time_sem", O_CREAT, 0666, 1);
+	p->last_eat_sem = sem_open("last_eat", O_CREAT, 0666, 1);
+	p->ate_sem = sem_open("ate_sem", O_CREAT, 0666, 1);
+	p->print_sem = sem_open("print_sem", O_CREAT, 0666, 1);
+	if (p->print_sem == SEM_FAILED || p->forks == SEM_FAILED
+		|| p->die_sem == SEM_FAILED || p->time_sem == SEM_FAILED
+		|| p->last_eat_sem == SEM_FAILED || p->ate_sem == SEM_FAILED)
+	{
+		printf("Error: semaphore initialization failed, %d - errno\n", errno);
+		exit (1);
+	}
+	return ;
+}
+
 int	params_init(t_params *p, char **args, int argc)
 {
 	p->num_philo = ft_atoi(args[1]);
@@ -53,50 +77,6 @@ int	params_init(t_params *p, char **args, int argc)
 	if (argc == 6)
 		p->eat_max = ft_atoi(args[5]);
 	p->die = 0;
-	printf("exit here\n");
-	sem_unlink("forks");
-	sem_unlink("die_sem");
-	sem_unlink("time_sem");
-	sem_unlink("last_eat");
-	sem_unlink("ate_sem");
-	sem_unlink("print_sem");
-	p->forks = sem_open("forks", O_CREAT, 0666, p->num_philo);
-	if (p->forks == SEM_FAILED)
-	{
-		printf("Error: semaphore initialization failed, %d - errno\n", errno);
-		return (1);
-	}
-	p->die_sem = sem_open("die_sem", O_CREAT, 0666, 1);
-	if (p->die_sem == SEM_FAILED)
-	{
-		printf("Error: semaphore initialization failed, %d - errno\n", errno);
-		return (1);
-	}
-	p->time_sem = sem_open("time_sem", O_CREAT, 0666, 1);
-	if (p->time_sem == SEM_FAILED)
-	{
-		printf("Error: semaphore initialization failed, %d - errno\n", errno);
-		return (1);
-	}
-	p->last_eat_sem = sem_open("last_eat", O_CREAT, 0666, 1);
-	if (p->last_eat_sem == SEM_FAILED)
-	{
-		printf("Error: semaphore initialization failed, %d - errno\n", errno);
-		return (1);
-	}
-	p->ate_sem = sem_open("ate_sem", O_CREAT, 0666, 1);
-	if (p->ate_sem == SEM_FAILED)
-	{
-		printf("Error: semaphore initialization failed, %d - errno\n", errno);
-		return (1);
-	}
-	p->print_sem = sem_open("print_sem", O_CREAT, 0666, 1);
-	if (p->print_sem == SEM_FAILED)
-	{
-		printf("Error: semaphore initialization failed, %d - errno\n", errno);
-		return (1);
-	}
-	printf("exit here\n");
 	return (0);
 }
 

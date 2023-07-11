@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:03:13 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/07 20:33:36 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:30:58 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,16 @@ void	*die_check(void *args)
 	while (i < p->num_philo)
 	{
 		pthread_mutex_lock(&p->philo[i].last_eat_mtx);
+		pthread_mutex_lock(&p->die_mtx);
 		if (get_time(p) - p->philo[i].last_eat > (unsigned long)p->time_die)
 		{
 			printf("%lu %d died\n", get_time(p), i + 1);
-			pthread_mutex_lock(&p->die_mtx);
 			p->die = 1;
 			pthread_mutex_unlock(&p->die_mtx);
 			pthread_mutex_unlock(&p->philo[i].last_eat_mtx);
 			return (0);
 		}
+		pthread_mutex_unlock(&p->die_mtx);
 		pthread_mutex_unlock(&p->philo[i].last_eat_mtx);
 		if (count_check(p) == 0)
 			return (0);
