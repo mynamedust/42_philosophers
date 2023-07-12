@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:27:27 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/11 17:48:49 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:42:58 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include <signal.h>
 
 //Types
@@ -54,24 +55,24 @@ typedef struct s_philo
 }	t_philo;
 
 //Init
-int				ft_atoi(const char *str);
 int				params_valid(char **args, int count);
+t_philo			*philo_init(t_params *p, int id);
 int				params_init(t_params *p, char **args, int argc);
-void			mutex_init(t_params *p);
-t_philo			*philo_init(t_params *p, int i);
+void			ft_sem_init(t_params *p);
+int				ft_atoi(const char *str);
 
 //Utils
-pthread_mutex_t	*fork_pick(t_philo *philo, int order);
-unsigned long	get_time(t_params *p);
-int				count_check(t_params *p);
-void			ft_usleep(t_params *p, unsigned long ms);
+unsigned long	get_time(void);
+void			ft_usleep(unsigned long ms);
 int				die_return(t_philo *philo);
+void			clean_exit(t_params *p);
+void			ft_parent_or_child(t_params *p, int i, int status);
 
-//Main
+//Philo
+void			p_process(t_params *p, t_philo *philo);
 void			*die_check(void *args);
 void			*p_thread(void *args);
-int				fork_take(t_philo *philo);
+void			fork_pick(t_philo *philo);
 void			ft_eating(t_philo *philo);
-void			clean_exit(t_params *p);
 
 #endif

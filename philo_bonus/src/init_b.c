@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/11 20:06:31 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/12 17:43:53 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	sem_init(t_params *p)
+void	ft_sem_init(t_params *p)
 {
 	sem_unlink("forks");
 	sem_unlink("die_sem");
@@ -77,6 +77,7 @@ int	params_init(t_params *p, char **args, int argc)
 	if (argc == 6)
 		p->eat_max = ft_atoi(args[5]);
 	p->die = 0;
+	ft_sem_init(p);
 	return (0);
 }
 

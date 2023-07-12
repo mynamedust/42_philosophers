@@ -1,13 +1,13 @@
 NAME	=	philo_bonus
 S_DIR	=	src/
 O_DIR	=	obj/
-SRC		=	main_b.c	init_b.c	utils_b.c
+SRC		=	main_b.c	init_b.c	utils_b.c	philo_b.c
 OBJ		=	$(SRC:.c=.o)
 SRCS	=	$(addprefix $(S_DIR), $(SRC))
 OBJS	=	$(addprefix $(O_DIR), $(OBJ))
 INC		=	-I ./includes
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g
 
 all: $(O_DIR) $(NAME)
 
