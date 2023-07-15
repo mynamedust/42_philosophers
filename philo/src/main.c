@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:03:13 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/11 16:30:58 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/15 15:49:03 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,7 @@ void	*p_thread(void *args)
 	while (1)
 	{
 		if (die_return(philo) == 1)
-		{
-			pthread_mutex_unlock(fork_pick(philo, 2));
-			pthread_mutex_unlock(fork_pick(philo, 1));
 			return (0);
-		}
 		if (fork_take(philo) == 1)
 			return (0);
 		ft_eating(philo);

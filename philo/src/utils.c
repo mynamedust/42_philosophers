@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:24:55 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/07 20:33:40 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/15 15:51:17 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	die_return(t_philo *philo)
 	pthread_mutex_lock(&philo->p->die_mtx);
 	if (philo->p->die == 1)
 	{
+		pthread_mutex_unlock(fork_pick(philo, 2));
+		pthread_mutex_unlock(fork_pick(philo, 1));
 		pthread_mutex_unlock(&philo->p->die_mtx);
 		return (1);
 	}
