@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/07 20:33:45 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/20 15:45:50 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,14 @@ int	params_init(t_params *p, char **args, int argc)
 	p->eat_max = -1;
 	if (argc == 6)
 		p->eat_max = ft_atoi(args[5]);
+	if (p->eat_max == 0)
+		return (1);
 	p->forks = malloc(sizeof(pthread_mutex_t) * p->num_philo);
 	if (!p->forks)
+	{
+		printf("Memory alocating error.\n")
 		return (1);
+	}
 	p->die = 0;
 	p->eat_count = 0;
 	mutex_init(p);
@@ -103,12 +108,20 @@ int	params_valid(char **args, int count)
 
 	i = 0;
 	j = 0;
+	if (count < 4 || count > 5)
+	{
+		printf("Error. Write valid count arguments.\n");
+		return (1);
+	}
 	while (i < count)
 	{
 		while (args[i][j])
 		{
 			if (args[i][j] > '9' || args[i][j] < '0')
+			{
+				printf("Error. Write valid arguments.\n");
 				return (1);
+			}
 			j++;
 		}
 		i++;

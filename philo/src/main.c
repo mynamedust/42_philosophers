@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:03:13 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/15 15:49:03 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/20 15:44:41 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,10 @@ int	main(int argc, char **argv)
 	int			i;
 	int			status_addr;
 
-	if (argc < 5 || params_valid(argv + 1, argc - 1))
+	if (params_valid(argv + 1, argc - 1))
 		return (1);
-	params_init(&p, argv, argc);
+	if (params_init(&p, argv, argc) == 1)
+		return (0);
 	p.philo = philo_init(&p, -1);
 	i = 0;
 	get_time(&p);
