@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/20 15:45:50 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/20 15:50:58 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	params_init(t_params *p, char **args, int argc)
 	p->forks = malloc(sizeof(pthread_mutex_t) * p->num_philo);
 	if (!p->forks)
 	{
-		printf("Memory alocating error.\n")
+		printf("Memory alocating error.\n");
 		return (1);
 	}
 	p->die = 0;
