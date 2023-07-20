@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/15 16:01:41 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:05:32 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,15 @@ int	params_init(t_params *p, char **args, int argc)
 	p->time_sleep = ft_atoi(args[4]);
 	p->pids = malloc(sizeof(pid_t) * p->num_philo);
 	if (!p->pids)
+	{
+		printf("Memory allocating error.\n");
 		clean_exit(p);
+	}
 	p->eat_max = -1;
 	if (argc == 6)
-	{
 		p->eat_max = ft_atoi(args[5]);
-		if (p->eat_max <= 0)
-			exit(0);
-	}
+	if (p->eat_max == 0)
+		clean_exit(p);
 	p->die = 0;
 	ft_sem_init(p);
 	return (0);
@@ -106,12 +107,20 @@ int	params_valid(char **args, int count)
 
 	i = 0;
 	j = 0;
+	if (count < 4 || count > 5)
+	{
+		printf("Error. Write valid count arguments.\n");
+		return (1);
+	}
 	while (i < count)
 	{
 		while (args[i][j])
 		{
 			if (args[i][j] > '9' || args[i][j] < '0')
+			{
+				printf("Error. Write valid arguments.\n");
 				return (1);
+			}
 			j++;
 		}
 		i++;

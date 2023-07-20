@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:27:04 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/12 21:32:26 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:02:43 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_params	p;
 	int			i;
 
-	if (argc < 5 || params_valid(argv + 1, argc - 1))
+	if (params_valid(argv + 1, argc - 1))
 		return (1);
 	if (params_init(&p, argv, argc) == 1)
 		return (1);
