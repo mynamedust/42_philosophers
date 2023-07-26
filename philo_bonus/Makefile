@@ -11,7 +11,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 
 all: $(O_DIR) $(NAME)
 
-$(O_DIR)%.o : $(S_DIR)%.c
+$(O_DIR)%.o : $(S_DIR)%.c Makefile
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(O_DIR):

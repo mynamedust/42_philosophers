@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/20 16:05:34 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/26 18:00:11 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,13 @@ int	params_init(t_params *p, char **args, int argc)
 	p->time_die = ft_atoi(args[2]);
 	p->time_eat = ft_atoi(args[3]);
 	p->time_sleep = ft_atoi(args[4]);
+	if (p->num_philo <= 0 || p->time_die <= 0 || p->time_eat <= 0
+		|| p->time_sleep <= 0)
+		return (1);
 	p->eat_max = -1;
 	if (argc == 6)
 		p->eat_max = ft_atoi(args[5]);
-	if (p->eat_max == 0)
+	if (p->eat_max == 0 || p->eat_max < -1)
 		return (1);
 	p->forks = malloc(sizeof(pthread_mutex_t) * p->num_philo);
 	if (!p->forks)
@@ -106,26 +109,24 @@ int	params_valid(char **args, int count)
 	int	i;
 	int	j;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	if (count < 4 || count > 5)
 	{
-		printf("Error. Write valid count arguments.\n");
+		printf("Error. Write valid number of arguments.\n");
 		return (1);
 	}
-	while (i < count)
+	while (++i < count)
 	{
-		while (args[i][j])
+		while (args[i][++j] || args[i][0] == '\0')
 		{
-			if (args[i][j] > '9' || args[i][j] < '0')
+			if ((args[i][j] > '9' || args[i][j] < '0') || args[i][0] == '\0')
 			{
 				printf("Error. Write valid arguments.\n");
 				return (1);
 			}
-			j++;
 		}
-		i++;
-		j = 0;
+		j = -1;
 	}
 	return (0);
 }

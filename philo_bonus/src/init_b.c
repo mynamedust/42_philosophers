@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/20 16:05:32 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:43:42 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ int	params_init(t_params *p, char **args, int argc)
 	p->time_die = ft_atoi(args[2]);
 	p->time_eat = ft_atoi(args[3]);
 	p->time_sleep = ft_atoi(args[4]);
+	if (p->num_philo <= 0 || p->time_die <= 0 || p->time_eat <= 0
+		|| p->time_sleep <= 0)
+		return (1);
 	p->pids = malloc(sizeof(pid_t) * p->num_philo);
 	if (!p->pids)
 	{
@@ -79,7 +82,7 @@ int	params_init(t_params *p, char **args, int argc)
 	p->eat_max = -1;
 	if (argc == 6)
 		p->eat_max = ft_atoi(args[5]);
-	if (p->eat_max == 0)
+	if (p->eat_max == 0 || p->eat_max < -1)
 		clean_exit(p);
 	p->die = 0;
 	ft_sem_init(p);
@@ -105,26 +108,24 @@ int	params_valid(char **args, int count)
 	int	i;
 	int	j;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	if (count < 4 || count > 5)
 	{
-		printf("Error. Write valid count arguments.\n");
+		printf("Error. Write valid number of arguments.\n");
 		return (1);
 	}
-	while (i < count)
+	while (++i < count)
 	{
-		while (args[i][j])
+		while (args[i][++j] || args[i][0] == '\0')
 		{
-			if (args[i][j] > '9' || args[i][j] < '0')
+			if ((args[i][j] > '9' || args[i][j] < '0') || args[i][0] == '\0')
 			{
 				printf("Error. Write valid arguments.\n");
 				return (1);
 			}
-			j++;
 		}
-		i++;
-		j = 0;
+		j = -1;
 	}
 	return (0);
 }
