@@ -1,7 +1,7 @@
 NAME	=	philo
 S_DIR	=	src/
 O_DIR	=	obj/
-SRC		=	main.c	init.c	utils.c
+SRC		=	main.c	init.c	utils.c philo.c
 OBJ		=	$(SRC:.c=.o)
 SRCS	=	$(addprefix $(S_DIR), $(SRC))
 OBJS	=	$(addprefix $(O_DIR), $(OBJ))

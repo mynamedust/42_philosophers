@@ -6,11 +6,28 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:27:04 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/20 16:02:43 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:55:16 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+int	err(char *str)
+{
+	while (*str)
+		write(2, str++, 1);
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {

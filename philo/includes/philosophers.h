@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:27:27 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/07 20:34:43 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:43:22 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 //Types
 typedef struct s_params
@@ -66,10 +67,14 @@ int				count_check(t_params *p);
 void			ft_usleep(t_params *p, unsigned long ms);
 int				die_return(t_philo *philo);
 
-//Main
+//Philo
 void			*die_check(void *args);
 void			*p_thread(void *args);
 int				fork_take(t_philo *philo);
 void			ft_eating(t_philo *philo);
+
+//Main
+int				err(char *str);
+int				ft_strcmp(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/26 17:43:42 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:53:08 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,18 @@ int	ft_atoi(const char *str)
 	while (*str == 9 || *str == 10 || *str == 11
 		|| *str == 12 || *str == 13 || *str == 0 || *str == ' ')
 		str++;
+	if (*str == '-')
+		sign = -1;
 	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
 		str++;
-	}
 	while ((*str >= '0' && *str <= '9') && *str)
 	{
-		result += *str - '0';
 		result *= 10;
+		result += *str - '0';
 		str++;
+		if ((result * sign) > INT_MAX || (result * sign) < INT_MIN)
+			return (err("Error. Write valid arguments.\n"));
 	}
-	result /= 10;
 	return (result * sign);
 }
 
@@ -72,7 +71,7 @@ int	params_init(t_params *p, char **args, int argc)
 	p->time_sleep = ft_atoi(args[4]);
 	if (p->num_philo <= 0 || p->time_die <= 0 || p->time_eat <= 0
 		|| p->time_sleep <= 0)
-		return (1);
+		return (err("Error. Write valid arguments\n"));
 	p->pids = malloc(sizeof(pid_t) * p->num_philo);
 	if (!p->pids)
 	{
@@ -111,19 +110,15 @@ int	params_valid(char **args, int count)
 	i = -1;
 	j = -1;
 	if (count < 4 || count > 5)
-	{
-		printf("Error. Write valid number of arguments.\n");
-		return (1);
-	}
+		return (err("Error. Write valid number of arguments.\n"));
 	while (++i < count)
 	{
+		if (args[i] && ft_strcmp(args[i], "1") && ft_atoi(args[i]) == 1)
+			return (1);
 		while (args[i][++j] || args[i][0] == '\0')
 		{
 			if ((args[i][j] > '9' || args[i][j] < '0') || args[i][0] == '\0')
-			{
-				printf("Error. Write valid arguments.\n");
-				return (1);
-			}
+				return (err("Error. Write valid arguments.\n"));
 		}
 		j = -1;
 	}
