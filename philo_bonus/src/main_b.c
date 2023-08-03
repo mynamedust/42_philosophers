@@ -6,11 +6,11 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:27:04 by almeliky          #+#    #+#             */
-/*   Updated: 2023/08/02 15:55:16 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:01:23 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_b.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

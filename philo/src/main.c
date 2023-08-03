@@ -6,7 +6,7 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:03:13 by almeliky          #+#    #+#             */
-/*   Updated: 2023/08/02 15:49:01 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:18:43 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main(int argc, char **argv)
 		pthread_create(&(p.philo[i].thread), NULL, p_thread, &p.philo[i]);
 		i++;
 	}
+	
 	pthread_create(&(p.die_thr), NULL, die_check, &p);
 	pthread_join(p.die_thr, (void **)&status_addr);
 	i = 0;

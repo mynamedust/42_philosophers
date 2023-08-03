@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_b.h"
 
 void	ft_eating(t_philo *philo)
 {

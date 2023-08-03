@@ -6,11 +6,11 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:00:09 by almeliky          #+#    #+#             */
-/*   Updated: 2023/08/02 15:53:08 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:01:21 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_b.h"
 
 int	ft_atoi(const char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 19:24:55 by almeliky          #+#    #+#             */
-/*   Updated: 2023/07/12 21:28:30 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:01:30 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_b.h"
 
 unsigned long	get_time(void)
 {

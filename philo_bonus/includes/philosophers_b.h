@@ -6,12 +6,12 @@
 /*   By: almeliky <almeliky@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:27:27 by almeliky          #+#    #+#             */
-/*   Updated: 2023/08/02 15:53:42 by almeliky         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:01:00 by almeliky         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILOSOPHERS_B_H
+# define PHILOSOPHERS_B_H
 
 //Includes
 # include <stdlib.h>
